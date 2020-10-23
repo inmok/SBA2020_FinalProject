@@ -7,7 +7,7 @@
 # Authors:
 #   * Siegfried-A. Gevatter
 
-import curses
+import curses # python 터미널 그래픽 어플리케이션을 만들 수 있는 라이브러리
 import math
 
 import rospy

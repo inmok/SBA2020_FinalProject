@@ -21,7 +21,7 @@ cap = cv2.VideoCapture(0)
 class robot():
     def __init__(self):
         rospy.init_node('robot_controller', anonymous=True)
-        self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+        self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=1) #Twist 메세지 타입을 사용하는 'cmd_vel'토픽에게 노드를 발행
 
     def keeping(self,hsv):
         global LSD

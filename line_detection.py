@@ -269,10 +269,10 @@ def line_trace(frame,stage,verbose): ### line을 찾은 후 각속도를 return
 # 				else:
 # 					continue
 
-	else: ### in most of stage
-
-		lines = cv2.HoughLinesP(edge,1,np.pi/180,10,5,10)
-
+	else: ### 주차가 아닌 대부분의 경우 == 우리가 원하는 라인따라 주행
+			
+		lines = cv2.HoughLinesP(edge,1,np.pi/180,10,5,10)   ### 임의의 점을 이용하여 직선을 찾는 허프변환 
+		### 찾아진 직선들이 lines 라는 변수안에 저장된다
 
 		lineL=[]
 		lineR=[]
@@ -287,8 +287,8 @@ def line_trace(frame,stage,verbose): ### line을 찾은 후 각속도를 return
 			
 		if lines is not None:
 			lines=[l[0] for l in lines]
-			for x1,y1,x2,y2 in lines:
-				degree=np.arctan2(y2-y1,x2-x1)*180/np.pi			
+			for x1,y1,x2,y2 in lines:    ### lines의 한 직선의 0번째 점에서 x1.x2.y1.y2를 추출
+				degree=np.arctan2(y2-y1,x2-x1)*180/np.pi   ### arctan : 역삼각함수			
 				if i==2:
 					break
 				if x1>150 and R==0:

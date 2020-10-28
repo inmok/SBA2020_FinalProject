@@ -24,6 +24,17 @@ class robot():
         self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
         self.img_subscriber = rospy.Subscriber('/raspicam_node/image/compressed',CompressedImage,self.callback_img)
 
+    def getKey():
+        tty.setraw(sys.stdin.fileno())
+        rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
+        if rlist:
+            key = sys.stdin.read(1)
+        else:
+            key = ''
+
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+        return key
+    
     def callback_img(self,data):
         np_arr = np.fromstring(data.data, np.uint8)
         self.image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) # OpenCV >= 3.0:
@@ -48,25 +59,15 @@ class robot():
         elif white_line[0] is None and white_line2[0] is None:
             vel_msg.linear.x = 0.05
             vel_msg.angular.z = -0.6
+        elif key == 'q':
+            vel_msg.linear.x = 0
+            vel_msg.angular.z = 0
         else :
             vel_msg.linear.x = 0.2
             vel_msg.angular.z = 0
-            
-        key = cv2.waitKey(25)
-        if key == 32:
-            vel_msg.linear.x = 0
-            vel_msg.angular.z = 0   
-            
         self.velocity_publisher.publish(vel_msg)
         
-        
-        
-        
-#         key = cv2.waitKey(0)
-#         elif key == 27:
-#             vel_msg.linear.x = 0
-#             vel_msg.angular.z = 0
-#         self.velocity_publisher.publish(vel_msg)
+  
         
     def imageupdate(self):
         image=self.image_np

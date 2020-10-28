@@ -58,11 +58,13 @@ class robot():
             vel_msg.linear.x = 0
             vel_msg.angular.z = 0
         self.velocity_publisher.publish(vel_msg)
+        
         key = cv2.waitKey(0)
         elif key == 27:
             vel_msg.linear.x = 0
             vel_msg.angular.z = 0
         self.velocity_publisher.publish(vel_msg)
+        
     def imageupdate(self):
         image=self.image_np
         hsv = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)

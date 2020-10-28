@@ -35,12 +35,12 @@ class robot():
       
         yello_line = LSD.detect(L_mask)   # .detect() : input값에서 line을 찾아준다
         yello_line2 = LSD.detect(L2_mask)
-        white_line = LSD.detect(R_mask)
+        white_line = LSD.detect(R_mas
         white_line2 = LSD.detect(R2_mask)
-        if yello_line[0] is None and yello_line2[0] is None:  # 노란색선이 인식되지 않으면
+        if yello_line[0] is None and yello_line2[0] is None:  # 노란색선이 인식되지 않으면 왼쪽회전
             vel_msg.linear.x = 0.05   # linear.x : 직선속도
             vel_msg.angular.z = 0.6   # angular.z : 회전속도
-        elif white_line[0] is None and white_line2[0] is None:   # 하얀색선이 인식되지 않으면
+        elif white_line[0] is None and white_line2[0] is None:   # 하얀색선이 인식되지 않으면 오른쪽회전
             vel_msg.linear.x = 0.05
             vel_msg.angular.z = -0.6
         else :    # 그 외 경우 = 직진

@@ -51,13 +51,16 @@ class robot():
         else :
             vel_msg.linear.x = 0.2
             vel_msg.angular.z = 0
-        self.velocity_publisher.publish(vel_msg)
-        
+            
         key = cv2.waitKey(25)
         if key == 32:
             vel_msg.linear.x = 0
-            vel_msg.angular.z = 0
+            vel_msg.angular.z = 0   
+            
         self.velocity_publisher.publish(vel_msg)
+        
+        
+        
         
 #         key = cv2.waitKey(0)
 #         elif key == 27:

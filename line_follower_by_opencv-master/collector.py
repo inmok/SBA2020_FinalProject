@@ -2,6 +2,28 @@
 # coding: utf-8
 
 # In[1]:
+''' 
+메인코드 분석 collector.py
+* 프로그램 설명서로서 총괄 프로그램이라고 볼 수 있다.
+* 기본적으로 필요한 모듈을 모두 import 하는데, tensorflow때문에 다소 오래 걸린다.
+* 초음파 센서 조작하는데 필요한 pin 세팅.
+* KBHit 클래스 : 터미널 창에서 키보드 입력을 감지하는 클래스.
+* kbhit 메서드 : 키보드를 누르면 그 값을 반환, 아무것도 누르지 않으면 False 반환.
+* ultrasonic 메서드 : 초음파 관련
+* getkey 메서드 : 키보드 값을 반환하는 메서드인데, 이 메서드 사용 않고(deprecated) 대신 kbhit
+* Collector 클래스 : 데이터 수집 / 주행 클래스 
+* move_forward 메서드 : 직진명령을 publish 해주고 [0,1,0] 커맨드를 반환
+* turn_ right, turn_left : 우회전/ 좌회전 publish 해주고 001, 100 커맨드 반환
+* stop_turtlebot 메서드 : 정지 명령을 publish
+* control 메서드 : getkey() 메서드를 이용해 turtlebot 조종
+* control_use_model 메서드 : CNN 을 통해 나온 결과로 조종
+* collect 메서드 : 데이터 수집하는 메서드. 순수하게 인간이 조종해준다. 데이터 수집이 끝나 주행이 잘되면 더이상 쓰이지 않는다.
+*drive 메서드 : 자율주행 메서드. main loop 에서 이 메서드만 돌아간다. 주행기능과 동시에 인간이 개입하여 조종하고 데이터 추가기능도 모두 구현된다.
+*make_data : Collector 객체가 가지고 있는 이미지와 그에 대응되는 라벨 데이터를 h5py 형식의 파일로 저장하는 메서드이다.
+*add_data : 기존의 파일에 데이터를 추가하는 메서드. 여기서 안쓰이고 이 기능은 학습을 수행하는 노트북에서 일괄적으로 처리
+*read_data : 파일이 잘 저장되었나 확인하려는 디버그 메서드. 만들어놓고 쓰지는 않았다.
+*main 함수: Collector 객체 생성 이제 collect 메서드는 사용할 일이 없고, drive 메서드만 돌린다. 주행이 끝내면 데이터를 만들고 프로그램이 종료된다.
+'''
 
 import numpy as np
 import h5py

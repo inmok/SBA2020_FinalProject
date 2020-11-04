@@ -24,7 +24,7 @@ class robot():
         self.img_subscriber = rospy.Subscriber('/raspicam_node/image/compressed',CompressedImage,self.callback_img)
 
     def callback_img(self,data):
-        np_arr = np.fromstring(data.data, np.uint8)
+        np_arr = np.fromstring(data.data, np.uint8) # python 2.x에서는 
         self.image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) # OpenCV >= 3.0:
         
     def keeping(self,hsv):

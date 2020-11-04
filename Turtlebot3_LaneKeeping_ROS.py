@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
-Created on Fri Nov  9 10:25:22 2018
-@author: mason
+1조 터틀봇 lane tracking code 최종
 """
 '''libraries'''
 import time
@@ -31,25 +30,22 @@ class robot():
     def keeping(self,hsv):
         global LSD
         vel_msg=Twist()
-        crop_L=hsv[350:410,40:220]
-        crop_R=hsv[350:410,402:582]
-        L_mask = cv2.inRange(crop_L,(21,50,100),(36,255,255))
-        L2_mask = cv2.inRange(crop_L,(36,0,165),(255,255,255))
-        R_mask = cv2.inRange(crop_R,(36,0,165),(255,255,255))
-        R2_mask = cv2.inRange(crop_R,(21,50,100),(36,255,255))
+        crop_L=hsv[420:480,120:240]
+        crop_R=hsv[420:480,400:500]
+        L_mask = cv2.inRange(crop_L,(21,50,100),(36,255,255)) # Yellow lane
+        R_mask = cv2.inRange(crop_R,(80,0,180),(115,30,255)) # White lane
       
         yello_line = LSD.detect(L_mask)
-        yello_line2 = LSD.detect(L2_mask)
         white_line = LSD.detect(R_mask)
-        white_line2 = LSD.detect(R2_mask)
-        if yello_line[0] is None and yello_line2[0] is None:
-            vel_msg.linear.x = 0.05
-            vel_msg.angular.z = 0.6
-        elif white_line[0] is None and white_line2[0] is None:
-            vel_msg.linear.x = 0.05
-            vel_msg.angular.z = -0.6
+
+        if yello_line[0] is None :
+            vel_msg.linear.x = 0.03
+            vel_msg.angular.z = 0.35
+        elif white_line[0] is None :
+            vel_msg.linear.x = 0.03
+            vel_msg.angular.z = -0.35
         else :
-            vel_msg.linear.x = 0.2
+            vel_msg.linear.x = 0.08
             vel_msg.angular.z = 0
         self.velocity_publisher.publish(vel_msg)
 

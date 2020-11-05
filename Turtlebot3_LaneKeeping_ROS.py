@@ -9,6 +9,10 @@ import numpy as np
 import rospy
 import roslib
 import cv2
+'''deep learning lib'''
+import tensorflow as tf
+import keras
+
 
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import CompressedImage
@@ -57,6 +61,10 @@ class robot():
         image=self.image_np
         hsv = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
         return image,hsv
+'''    
+    def decision(self,img):
+        roi = image[:,:]
+'''
         
 turtle=robot()
 time.sleep(1.2)

@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-"""
-1조 터틀봇 lane tracking code 최종
-"""
 '''libraries'''
 import time
 import numpy as np
@@ -24,7 +21,7 @@ class robot():
         self.img_subscriber = rospy.Subscriber('/raspicam_node/image/compressed',CompressedImage,self.callback_img)
 
     def callback_img(self,data):
-        np_arr = np.fromstring(data.data, np.uint8) # python 2.x에서는 
+        np_arr = np.fromstring(data.data, np.uint8) # string data --> np data
         self.image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) # OpenCV >= 3.0:
         
     def keeping(self,hsv):
@@ -33,7 +30,7 @@ class robot():
         crop_L=hsv[420:480,120:240]
         crop_R=hsv[420:480,400:500]
         L_mask = cv2.inRange(crop_L,(21,50,100),(36,255,255)) # Yellow lane
-        R_mask = cv2.inRange(crop_R,(80,0,180),(115,30,255)) # White lane
+        R_mask = cv2.inRange(crop_R,(40,0,180),(115,30,255)) # White lane
       
         yello_line = LSD.detect(L_mask)
         white_line = LSD.detect(R_mask)

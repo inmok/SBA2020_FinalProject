@@ -29,13 +29,19 @@ class robot():
         vel_msg=Twist()
         crop_L=hsv[420:480,120:240]
         crop_R=hsv[420:480,400:500]
+        crop_S=hsv[180:300,260:380]
         L_mask = cv2.inRange(crop_L,(21,50,100),(36,255,255)) # Yellow lane
         R_mask = cv2.inRange(crop_R,(40,0,180),(115,30,255)) # White lane
+        S_mask=cv2.inRange(crop_S,(165,0,193),(179,255,255)) # Stop sign
       
         yello_line = LSD.detect(L_mask)
         white_line = LSD.detect(R_mask)
-
-        if yello_line[0] is None :
+        stop_sign = LSD.detect(S_mask)
+        
+        if stop_sign[0] is not None:
+            vel_msg.linear.x = 0
+            vel_msg.angular.z = 0
+        elif yello_line[0] is None :
             vel_msg.linear.x = 0.03
             vel_msg.angular.z = 0.35
         elif white_line[0] is None :
